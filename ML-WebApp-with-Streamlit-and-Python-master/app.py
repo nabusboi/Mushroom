@@ -102,11 +102,23 @@ def main():
             model.fit(x_train.values, y_train.values)  # Ensure data is in numpy array format
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
-            st.write("Accuracy: ", round(accuracy, 2))
-            st.write("Precision: ", precision_score(y_test, y_pred).round(2))
-            st.write("Recall: ", recall_score(y_test, y_pred).round(2))
-            plot_metrics(metrics, model, x_test, y_test, class_names)
 
+            # Debugging: Check shapes of y_test and y_pred
+            st.write("Shape of y_test:", y_test.shape)
+            st.write("Shape of y_pred:", y_pred.shape)
+
+            # Try to compute precision score and handle potential errors
+            try:
+                precision = precision_score(y_test, y_pred)
+                recall = recall_score(y_test, y_pred)
+                st.write("Accuracy: ", round(accuracy, 2))
+                st.write("Precision: ", precision.round(2))
+                st.write("Recall: ", recall.round(2))
+                plot_metrics(metrics, model, x_test, y_test, class_names)
+            except ValueError as e:
+                st.error(f"Error calculating precision and recall: {e}")
+                st.write("Please check the data and ensure there are no mismatched or missing values.")
+        
     # Logistic Regression Classifier
     if classifier == "Logistic Regression":
         st.sidebar.subheader("Model Hyperparameters")
@@ -121,10 +133,16 @@ def main():
             model.fit(x_train.values, y_train.values)  # Ensure data is in numpy array format
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
-            st.write("Accuracy: ", round(accuracy, 2))
-            st.write("Precision: ", precision_score(y_test, y_pred).round(2))
-            st.write("Recall: ", recall_score(y_test, y_pred).round(2))
-            plot_metrics(metrics, model, x_test, y_test, class_names)
+
+            try:
+                precision = precision_score(y_test, y_pred)
+                recall = recall_score(y_test, y_pred)
+                st.write("Accuracy: ", round(accuracy, 2))
+                st.write("Precision: ", precision.round(2))
+                st.write("Recall: ", recall.round(2))
+                plot_metrics(metrics, model, x_test, y_test, class_names)
+            except ValueError as e:
+                st.error(f"Error calculating precision and recall: {e}")
 
     # Random Forest Classifier
     if classifier == "Random Forest":
@@ -141,10 +159,16 @@ def main():
             model.fit(x_train.values, y_train.values)  # Ensure data is in numpy array format
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
-            st.write("Accuracy: ", round(accuracy, 2))
-            st.write("Precision: ", precision_score(y_test, y_pred).round(2))
-            st.write("Recall: ", recall_score(y_test, y_pred).round(2))
-            plot_metrics(metrics, model, x_test, y_test, class_names)
+
+            try:
+                precision = precision_score(y_test, y_pred)
+                recall = recall_score(y_test, y_pred)
+                st.write("Accuracy: ", round(accuracy, 2))
+                st.write("Precision: ", precision.round(2))
+                st.write("Recall: ", recall.round(2))
+                plot_metrics(metrics, model, x_test, y_test, class_names)
+            except ValueError as e:
+                st.error(f"Error calculating precision and recall: {e}")
 
     # Show raw data
     if st.sidebar.checkbox("Show raw data", False):
