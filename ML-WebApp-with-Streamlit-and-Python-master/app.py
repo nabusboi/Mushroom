@@ -103,8 +103,8 @@ def main():
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
             st.write("Accuracy: ", round(accuracy, 2))
-            st.write("Precision: ", precision_score(y_test, y_pred).round(2))
-            st.write("Recall: ", recall_score(y_test, y_pred).round(2))
+            st.write("Precision: ", safe_precision_score(y_test, y_pred))
+            st.write("Recall: ", safe_recall_score(y_test, y_pred))
             plot_metrics(metrics, model, x_test, y_test, class_names)
 
     # Logistic Regression Classifier
@@ -122,8 +122,8 @@ def main():
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
             st.write("Accuracy: ", round(accuracy, 2))
-            st.write("Precision: ", precision_score(y_test, y_pred).round(2))
-            st.write("Recall: ", recall_score(y_test, y_pred).round(2))
+            st.write("Precision: ", safe_precision_score(y_test, y_pred))
+            st.write("Recall: ", safe_recall_score(y_test, y_pred))
             plot_metrics(metrics, model, x_test, y_test, class_names)
 
     # Random Forest Classifier
@@ -142,8 +142,8 @@ def main():
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
             st.write("Accuracy: ", round(accuracy, 2))
-            st.write("Precision: ", precision_score(y_test, y_pred).round(2))
-            st.write("Recall: ", recall_score(y_test, y_pred).round(2))
+            st.write("Precision: ", safe_precision_score(y_test, y_pred))
+            st.write("Recall: ", safe_recall_score(y_test, y_pred))
             plot_metrics(metrics, model, x_test, y_test, class_names)
 
     # Show raw data
