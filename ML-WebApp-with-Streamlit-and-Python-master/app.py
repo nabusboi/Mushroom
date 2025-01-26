@@ -26,14 +26,14 @@ def main():
     @st.cache_data(persist=True)  # Cache data loading for better performance
     def load_data():
         try:
-            data = pd.read_csv('https://raw.githubusercontent.com/nabusboi/Mushroom/main/mushrooms.csv')  # Ensure file is in the same directory
-            label = LabelEncoder()
-            for col in data.columns:
-                data[col] = label.fit_transform(data[col])
+            url = 'https://raw.githubusercontent.com/nabusboi/Mushroom/main/mushrooms.csv'
+            response = requests.get(url)
+            response.raise_for_status()  # Check if request was successful
+            data = pd.read_csv(url)
             return data
-        except FileNotFoundError:
-            st.error("The file `mushrooms.csv` was not found. Please ensure it's in the same directory as the app.")
-            return pd.DataFrame()
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching the data: {e}")
+            return None
 
     # Split dataset into training and testing sets
     @st.cache_data(persist=True)
