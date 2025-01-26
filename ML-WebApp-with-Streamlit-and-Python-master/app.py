@@ -102,7 +102,7 @@ def main():
             model.fit(x_train.values, y_train.values)  # Ensure data is in numpy array format
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
-            st.write("Accuracy: ", accuracy.round(2))
+            st.write("Accuracy: ", round(accuracy, 2))
             st.write("Precision: ", precision_score(y_test, y_pred).round(2))
             st.write("Recall: ", recall_score(y_test, y_pred).round(2))
             plot_metrics(metrics, model, x_test, y_test, class_names)
@@ -121,7 +121,7 @@ def main():
             model.fit(x_train.values, y_train.values)  # Ensure data is in numpy array format
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
-            st.write("Accuracy: ", accuracy.round(2))
+            st.write("Accuracy: ", round(accuracy, 2))
             st.write("Precision: ", precision_score(y_test, y_pred).round(2))
             st.write("Recall: ", recall_score(y_test, y_pred).round(2))
             plot_metrics(metrics, model, x_test, y_test, class_names)
@@ -141,7 +141,7 @@ def main():
             model.fit(x_train.values, y_train.values)  # Ensure data is in numpy array format
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
-            st.write("Accuracy: ", accuracy.round(2))
+            st.write("Accuracy: ", round(accuracy, 2))
             st.write("Precision: ", precision_score(y_test, y_pred).round(2))
             st.write("Recall: ", recall_score(y_test, y_pred).round(2))
             plot_metrics(metrics, model, x_test, y_test, class_names)
