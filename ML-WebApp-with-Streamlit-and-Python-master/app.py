@@ -31,9 +31,13 @@ def main():
             response.raise_for_status()  # Check if request was successful
             data = pd.read_csv(url)
             return data
+        except requests.exceptions.HTTPError as e:
+            print(f"HTTP error occurred: {e}")
         except requests.exceptions.RequestException as e:
             print(f"Error fetching the data: {e}")
-            return None
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+    return None
 
     # Split dataset into training and testing sets
     @st.cache_data(persist=True)
