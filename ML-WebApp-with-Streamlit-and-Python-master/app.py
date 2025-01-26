@@ -26,13 +26,13 @@ def main():
     @st.cache_data(persist=True)  # Cache data loading for better performance
     def load_data():
          url = 'https://raw.githubusercontent.com/nabusboi/Mushroom/main/mushrooms.csv'
-        try:
+         try:
             response = requests.get(url)
             response.raise_for_status()  # Check if the request was successful
             data = pd.read_csv(url)  # Load the CSV data into a DataFrame
             st.write(data.head())  # Display the first few rows of the data for debugging
             return data
-        except requests.exceptions.RequestException as e:
+         except requests.exceptions.RequestException as e:
             st.error(f"Error fetching the data: {e}")
         return None
 
