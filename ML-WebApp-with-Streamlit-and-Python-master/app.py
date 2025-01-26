@@ -112,8 +112,8 @@ def main():
                 precision = precision_score(y_test, y_pred)
                 recall = recall_score(y_test, y_pred)
                 st.write("Accuracy: ", round(accuracy, 2))
-                st.write("Precision: ", precision.round(2))
-                st.write("Recall: ", recall.round(2))
+                st.write("Precision: ", round(precision, 2))  # Use round() instead of precision.round(2)
+                st.write("Recall: ", round(recall, 2))  # Use round() instead of recall.round(2)
                 plot_metrics(metrics, model, x_test, y_test, class_names)
             except ValueError as e:
                 st.error(f"Error calculating precision and recall: {e}")
@@ -138,8 +138,8 @@ def main():
                 precision = precision_score(y_test, y_pred)
                 recall = recall_score(y_test, y_pred)
                 st.write("Accuracy: ", round(accuracy, 2))
-                st.write("Precision: ", precision.round(2))
-                st.write("Recall: ", recall.round(2))
+                st.write("Precision: ", round(precision, 2))  # Use round() instead of precision.round(2)
+                st.write("Recall: ", round(recall, 2))  # Use round() instead of recall.round(2)
                 plot_metrics(metrics, model, x_test, y_test, class_names)
             except ValueError as e:
                 st.error(f"Error calculating precision and recall: {e}")
@@ -164,8 +164,8 @@ def main():
                 precision = precision_score(y_test, y_pred)
                 recall = recall_score(y_test, y_pred)
                 st.write("Accuracy: ", round(accuracy, 2))
-                st.write("Precision: ", precision.round(2))
-                st.write("Recall: ", recall.round(2))
+                st.write("Precision: ", round(precision, 2))  # Use round() instead of precision.round(2)
+                st.write("Recall: ", round(recall, 2))  # Use round() instead of recall.round(2)
                 plot_metrics(metrics, model, x_test, y_test, class_names)
             except ValueError as e:
                 st.error(f"Error calculating precision and recall: {e}")
