@@ -26,16 +26,16 @@ def main():
     # Load dataset
     @st.cache_data(persist=True)  # Cache data loading for better performance
     def load_data():
-         url = 'https://raw.githubusercontent.com/nabusboi/Mushroom/main/ML-WebApp-with-Streamlit-and-Python-master/mushrooms.csv'
-         try:
+        url = 'https://raw.githubusercontent.com/nabusboi/Mushroom/main/ML-WebApp-with-Streamlit-and-Python-master/mushrooms.csv'
+        try:
             response = requests.get(url)
             response.raise_for_status()  # Check if the request was successful
             data = pd.read_csv(url)  # Load the CSV data into a DataFrame
             st.write(data.head())  # Display the first few rows of the data for debugging
             return data
-         except requests.exceptions.RequestException as e:
+        except requests.exceptions.RequestException as e:
             st.error(f"Error fetching the data: {e}")
-         return None
+        return None
 
     # Preprocessing function to encode categorical columns
     def preprocess_data(df):
@@ -103,8 +103,8 @@ def main():
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
             st.write("Accuracy: ", round(accuracy, 2))
-            st.write("Precision: ", safe_precision_score(y_test, y_pred))
-            st.write("Recall: ", safe_recall_score(y_test, y_pred))
+            st.write("Precision: ", precision_score(y_test, y_pred).round(2))
+            st.write("Recall: ", recall_score(y_test, y_pred).round(2))
             plot_metrics(metrics, model, x_test, y_test, class_names)
 
     # Logistic Regression Classifier
@@ -122,8 +122,8 @@ def main():
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
             st.write("Accuracy: ", round(accuracy, 2))
-            st.write("Precision: ", safe_precision_score(y_test, y_pred))
-            st.write("Recall: ", safe_recall_score(y_test, y_pred))
+            st.write("Precision: ", precision_score(y_test, y_pred).round(2))
+            st.write("Recall: ", recall_score(y_test, y_pred).round(2))
             plot_metrics(metrics, model, x_test, y_test, class_names)
 
     # Random Forest Classifier
@@ -142,8 +142,8 @@ def main():
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
             st.write("Accuracy: ", round(accuracy, 2))
-            st.write("Precision: ", safe_precision_score(y_test, y_pred))
-            st.write("Recall: ", safe_recall_score(y_test, y_pred))
+            st.write("Precision: ", precision_score(y_test, y_pred).round(2))
+            st.write("Recall: ", recall_score(y_test, y_pred).round(2))
             plot_metrics(metrics, model, x_test, y_test, class_names)
 
     # Show raw data
