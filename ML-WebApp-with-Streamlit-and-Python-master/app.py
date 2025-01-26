@@ -3,33 +3,47 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
-from sklearn.metrics import precision_score, recall_score, confusion_matrix, RocCurveDisplay, PrecisionRecallDisplay
+from sklearn.metrics import (
+    precision_score,
+    recall_score,
+    confusion_matrix,
+    RocCurveDisplay,
+    PrecisionRecallDisplay,
+    ConfusionMatrixDisplay,
+)
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import ConfusionMatrixDisplay
 
 def main():
+    # Title and description
     st.title("Binary Classification WebApp")
     st.markdown("Are your mushrooms edible or poisonous? 🍄")
 
     st.sidebar.title("Binary Classification")
     st.sidebar.markdown("Are your mushrooms edible or poisonous?")
 
-    @st.cache_data(persist=True)  # Updated caching for Streamlit Cloud
+    # Load dataset
+    @st.cache_data(persist=True)  # Cache data loading for better performance
     def load_data():
-        data = pd.read_csv('mushrooms.csv')
-        label = LabelEncoder()
-        for col in data.columns:
-            data[col] = label.fit_transform(data[col])
-        return data
+        try:
+            data = pd.read_csv('mushrooms.csv')  # Ensure file is in the same directory
+            label = LabelEncoder()
+            for col in data.columns:
+                data[col] = label.fit_transform(data[col])
+            return data
+        except FileNotFoundError:
+            st.error("The file `mushrooms.csv` was not found. Please ensure it's in the same directory as the app.")
+            return pd.DataFrame()
 
+    # Split dataset into training and testing sets
     @st.cache_data(persist=True)
-    def split(df):
+    def split_data(df):
         y = df.type
         x = df.drop(columns=['type'])
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=0)
         return x_train, x_test, y_train, y_test
 
+    # Plot performance metrics
     def plot_metrics(metrics_list, model, x_test, y_test, class_names):
         if 'Confusion Matrix' in metrics_list:
             st.subheader("Confusion Matrix")
@@ -48,13 +62,19 @@ def main():
             PrecisionRecallDisplay.from_estimator(model, x_test, y_test)
             st.pyplot()
 
+    # Load and preprocess data
     df = load_data()
-    x_train, x_test, y_train, y_test = split(df)
+    if df.empty:
+        return  # Stop execution if data is not available
+
+    x_train, x_test, y_train, y_test = split_data(df)
     class_names = ['edible', 'poisonous']
 
+    # Sidebar options for model selection
     st.sidebar.subheader("Choose Classifier")
     classifier = st.sidebar.selectbox("Classifier", ("Support Vector Machine (SVM)", "Logistic Regression", "Random Forest"))
 
+    # SVM Classifier
     if classifier == "Support Vector Machine (SVM)":
         st.sidebar.subheader("Model Hyperparameters")
         C = st.sidebar.number_input("C (Regularization parameter)", 0.01, 10.0, step=0.01, key='C')
@@ -74,6 +94,7 @@ def main():
             st.write("Recall: ", recall_score(y_test, y_pred).round(2))
             plot_metrics(metrics, model, x_test, y_test, class_names)
 
+    # Logistic Regression Classifier
     if classifier == "Logistic Regression":
         st.sidebar.subheader("Model Hyperparameters")
         C = st.sidebar.number_input("C (Regularization parameter)", 0.01, 10.0, step=0.01, key='C_LR')
@@ -92,6 +113,7 @@ def main():
             st.write("Recall: ", recall_score(y_test, y_pred).round(2))
             plot_metrics(metrics, model, x_test, y_test, class_names)
 
+    # Random Forest Classifier
     if classifier == "Random Forest":
         st.sidebar.subheader("Model Hyperparameters")
         n_estimators = st.sidebar.number_input("The number of trees in the forest", 100, 5000, step=10, key='n_estimators')
@@ -111,6 +133,7 @@ def main():
             st.write("Recall: ", recall_score(y_test, y_pred).round(2))
             plot_metrics(metrics, model, x_test, y_test, class_names)
 
+    # Show raw data
     if st.sidebar.checkbox("Show raw data", False):
         st.subheader("Mushroom Data Set (Classification)")
         st.write(df)
