@@ -37,6 +37,15 @@ def main():
             st.error(f"Error fetching the data: {e}")
          return None
 
+    # Preprocessing function to encode categorical columns
+    def preprocess_data(df):
+        # Use LabelEncoder to convert categorical columns to numeric
+        le = LabelEncoder()
+        for column in df.columns:
+            if df[column].dtype == 'object':
+                df[column] = le.fit_transform(df[column])
+        return df
+
     # Split dataset into training and testing sets
     @st.cache_data(persist=True)
     def split_data(df):
@@ -68,6 +77,8 @@ def main():
     df = load_data()
     if df.empty:
         return  # Stop execution if data is not available
+
+    df = preprocess_data(df)  # Preprocess the data to convert categorical to numeric
 
     x_train, x_test, y_train, y_test = split_data(df)
     class_names = ['edible', 'poisonous']
