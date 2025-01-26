@@ -66,7 +66,7 @@ def main():
 
     # Load and preprocess data
     df = load_data()
-    if df is None or df.empty:  # Check if df is None or empty
+    if df.empty:
         return  # Stop execution if data is not available
 
     x_train, x_test, y_train, y_test = split_data(df)
@@ -88,7 +88,7 @@ def main():
         if st.sidebar.button("Classify", key='classify_svm'):
             st.subheader("Support Vector Machine (SVM) Results")
             model = SVC(C=C, kernel=kernel, gamma=gamma)
-            model.fit(x_train.to_numpy(), y_train.to_numpy())  # Ensure data is in numpy format
+            model.fit(x_train.values, y_train.values)  # Ensure data is in numpy array format
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
             st.write("Accuracy: ", accuracy.round(2))
@@ -107,7 +107,7 @@ def main():
         if st.sidebar.button("Classify", key='classify_lr'):
             st.subheader("Logistic Regression Results")
             model = LogisticRegression(C=C, max_iter=max_iter)
-            model.fit(x_train.to_numpy(), y_train.to_numpy())  # Ensure data is in numpy format
+            model.fit(x_train.values, y_train.values)  # Ensure data is in numpy array format
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
             st.write("Accuracy: ", accuracy.round(2))
@@ -127,7 +127,7 @@ def main():
         if st.sidebar.button("Classify", key='classify_rf'):
             st.subheader("Random Forest Results")
             model = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, bootstrap=bootstrap, n_jobs=-1)
-            model.fit(x_train.to_numpy(), y_train.to_numpy())  # Ensure data is in numpy format
+            model.fit(x_train.values, y_train.values)  # Ensure data is in numpy array format
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
             st.write("Accuracy: ", accuracy.round(2))
