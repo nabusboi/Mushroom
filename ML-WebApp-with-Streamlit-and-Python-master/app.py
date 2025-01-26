@@ -26,7 +26,7 @@ def main():
     @st.cache_data(persist=True)  # Cache data loading for better performance
     def load_data():
         try:
-            data = pd.read_csv('mushrooms.csv')  # Ensure file is in the same directory
+            data = pd.read_csv('data/mushrooms.csv')  # Ensure file is in the same directory
             label = LabelEncoder()
             for col in data.columns:
                 data[col] = label.fit_transform(data[col])
