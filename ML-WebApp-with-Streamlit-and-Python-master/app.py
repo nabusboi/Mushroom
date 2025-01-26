@@ -34,7 +34,7 @@ def main():
             return data
          except requests.exceptions.RequestException as e:
             st.error(f"Error fetching the data: {e}")
-        return None
+         return None
 
     # Split dataset into training and testing sets
     @st.cache_data(persist=True)
