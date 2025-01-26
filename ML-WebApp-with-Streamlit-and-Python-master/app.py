@@ -26,7 +26,7 @@ def main():
     # Load dataset
     @st.cache_data(persist=True)  # Cache data loading for better performance
     def load_data():
-         url = 'https://github.com/nabusboi/Mushroom/blob/main/ML-WebApp-with-Streamlit-and-Python-master/mushrooms.csv'
+         url = 'https://raw.githubusercontent.com/nabusboi/Mushroom/main/ML-WebApp-with-Streamlit-and-Python-master/mushrooms.csv'
          try:
             response = requests.get(url)
             response.raise_for_status()  # Check if the request was successful
