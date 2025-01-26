@@ -25,19 +25,16 @@ def main():
     # Load dataset
     @st.cache_data(persist=True)  # Cache data loading for better performance
     def load_data():
+         url = 'https://raw.githubusercontent.com/nabusboi/Mushroom/main/mushrooms.csv'
         try:
-            url = 'https://raw.githubusercontent.com/nabusboi/Mushroom/main/mushrooms.csv'
             response = requests.get(url)
-            response.raise_for_status()  # Check if request was successful
-            data = pd.read_csv(url)
+            response.raise_for_status()  # Check if the request was successful
+            data = pd.read_csv(url)  # Load the CSV data into a DataFrame
+            st.write(data.head())  # Display the first few rows of the data for debugging
             return data
-        except requests.exceptions.HTTPError as e:
-            print(f"HTTP error occurred: {e}")
         except requests.exceptions.RequestException as e:
-            print(f"Error fetching the data: {e}")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-    return None
+            st.error(f"Error fetching the data: {e}")
+        return None
 
     # Split dataset into training and testing sets
     @st.cache_data(persist=True)
